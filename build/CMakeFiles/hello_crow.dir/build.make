@@ -81,6 +81,8 @@ hello_crow: CMakeFiles/hello_crow.dir/main.cpp.o
 hello_crow: CMakeFiles/hello_crow.dir/build.make
 hello_crow: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0
 hello_crow: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.71.0
+hello_crow: /usr/local/lib/libmongocxx.so
+hello_crow: /usr/local/lib/libbsoncxx.so
 hello_crow: CMakeFiles/hello_crow.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jcastro/Desktop/github-lib/hello_crow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable hello_crow"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/hello_crow.dir/link.txt --verbose=$(VERBOSE)

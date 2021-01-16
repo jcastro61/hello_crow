@@ -17,6 +17,10 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "../hello_crow"
+  "../PRIVATE"
+  "/usr/local/include/mongocxx/v_noabi"
+  "/usr/local/include/bsoncxx/v_noabi"
   )
 
 # Targets to which this target links.

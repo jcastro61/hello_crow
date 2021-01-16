@@ -1,11 +1,35 @@
 // docker run -v /home/jcastro/Desktop/cppweb:/usr/src/cppweb -p 8080:8080 -e PORT=8080 -it cppbox:latest /usr/src/cppweb/hello_crow/build/hello_crow
 
-#include "crow_all.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <vector>
+#include <cstdlib>
+#include <boost/filesystem.hpp>
+#include <bsoncxx/builder/stream/document.hpp>
+#include <bsoncxx/json.hpp>
+#include <bsoncxx/oid.hpp>
+
+#include <mongocxx/client.hpp>
+#include <mongocxx/stdx.hpp>
+#include <mongocxx/uri.hpp>
+#include <mongocxx/instance.hpp>
+#include <ostream>
+
+#include "crow_all.h"
+
+using bsoncxx::builder::stream::close_array;
+using bsoncxx::builder::stream::close_document;
+using bsoncxx::builder::stream::document;
+using bsoncxx::builder::stream::finalize;
+using bsoncxx::builder::stream::open_array;
+using bsoncxx::builder::stream::open_document;
+using bsoncxx::builder::basic::kvp;
+using mongocxx::cursor;
 
 using namespace std;
 using namespace crow;
+using namespace crow::mustache;
 
 void sendFile(response & res, string filename, string contentType)
 {
@@ -51,6 +75,29 @@ void sendStyle(response & res, string filename)
 int main(int argc, char* argv[])
 {
     crow::SimpleApp app;
+    mongocxx::instance inst {};
+    // Use for Heroku, not local db
+    // string mongoConnect = std::string(getenv("MONGO_URI"))
+    string mongoConnect = std::string("mongodb://localhost:37017/contact");
+    mongocxx::client conn {mongocxx::uri(mongoConnect)};
+    auto collection = conn["CRM"]["contacts"];
+
+    CROW_ROUTE(app, "/contacts")
+      ([&collection](){
+        mongocxx::options::find opts;
+        opts.limit(10);
+        auto docs = collection.find({}, opts);
+        std::ostringstream os;
+        for (auto &&doc : docs) {
+          os << bsoncxx::to_json(doc) << "\n";
+        }
+        return crow::response(os.str());
+      });
+
+    CROW_ROUTE(app, "/mongo")
+      ([](){
+        return "mongodb://localhost:37017/contact";
+      });
 
     CROW_ROUTE(app, "/about")
       ([](const request & req, response & res){
