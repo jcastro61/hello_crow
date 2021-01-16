@@ -1,21 +1,21 @@
 Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
-Change Dir: /home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp
+Change Dir: /home/jcastro/Desktop/github-lib/hello_crow/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_a6942/fast && /usr/bin/make -f CMakeFiles/cmTC_a6942.dir/build.make CMakeFiles/cmTC_a6942.dir/build
-make[1]: Entering directory '/home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_a6942.dir/src.c.o
-/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_a6942.dir/src.c.o   -c /home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_a6942
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a6942.dir/link.txt --verbose=1
-/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_a6942.dir/src.c.o  -o cmTC_a6942 
-/usr/bin/ld: CMakeFiles/cmTC_a6942.dir/src.c.o: in function `main':
+Run Build Command(s):/usr/bin/make cmTC_22950/fast && /usr/bin/make -f CMakeFiles/cmTC_22950.dir/build.make CMakeFiles/cmTC_22950.dir/build
+make[1]: Entering directory '/home/jcastro/Desktop/github-lib/hello_crow/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_22950.dir/src.c.o
+/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_22950.dir/src.c.o   -c /home/jcastro/Desktop/github-lib/hello_crow/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_22950
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_22950.dir/link.txt --verbose=1
+/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    CMakeFiles/cmTC_22950.dir/src.c.o  -o cmTC_22950 
+/usr/bin/ld: CMakeFiles/cmTC_22950.dir/src.c.o: in function `main':
 src.c:(.text+0x46): undefined reference to `pthread_create'
 /usr/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
 /usr/bin/ld: src.c:(.text+0x63): undefined reference to `pthread_join'
 collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_a6942.dir/build.make:87: cmTC_a6942] Error 1
-make[1]: Leaving directory '/home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_a6942/fast] Error 2
+make[1]: *** [CMakeFiles/cmTC_22950.dir/build.make:87: cmTC_22950] Error 1
+make[1]: Leaving directory '/home/jcastro/Desktop/github-lib/hello_crow/build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_22950/fast] Error 2
 
 
 Source file was:
@@ -36,190 +36,5 @@ int main(void)
   pthread_exit(NULL);
 
   return 0;
-}
-
-Determining if the pthread_create exist failed with the following output:
-Change Dir: /usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp
-
-Run Build Command:"/usr/bin/make" "cmTC_f36d9/fast"
-/usr/bin/make -f CMakeFiles/cmTC_f36d9.dir/build.make CMakeFiles/cmTC_f36d9.dir/build
-make[1]: Entering directory '/usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_f36d9.dir/CheckSymbolExists.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_f36d9.dir/CheckSymbolExists.c.o   -c /usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTC_f36d9
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f36d9.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_f36d9.dir/CheckSymbolExists.c.o  -o cmTC_f36d9 
-CMakeFiles/cmTC_f36d9.dir/CheckSymbolExists.c.o: In function `main':
-CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
-collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_f36d9.dir/build.make:97: recipe for target 'cmTC_f36d9' failed
-make[1]: *** [cmTC_f36d9] Error 1
-make[1]: Leaving directory '/usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_f36d9/fast' failed
-make: *** [cmTC_f36d9/fast] Error 2
-
-File /usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
-/* */
-#include <pthread.h>
-
-int main(int argc, char** argv)
-{
-  (void)argv;
-#ifndef pthread_create
-  return ((int*)(&pthread_create))[argc];
-#else
-  (void)argc;
-  return 0;
-#endif
-}
-
-Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
-Change Dir: /home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make cmTC_b020f/fast && /usr/bin/make -f CMakeFiles/cmTC_b020f.dir/build.make CMakeFiles/cmTC_b020f.dir/build
-make[1]: Entering directory '/home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_b020f.dir/src.c.o
-/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_b020f.dir/src.c.o   -c /home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_b020f
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b020f.dir/link.txt --verbose=1
-/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    CMakeFiles/cmTC_b020f.dir/src.c.o  -o cmTC_b020f 
-/usr/bin/ld: CMakeFiles/cmTC_b020f.dir/src.c.o: in function `main':
-src.c:(.text+0x46): undefined reference to `pthread_create'
-/usr/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
-/usr/bin/ld: src.c:(.text+0x63): undefined reference to `pthread_join'
-collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_b020f.dir/build.make:87: cmTC_b020f] Error 1
-make[1]: Leaving directory '/home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_b020f/fast] Error 2
-
-
-Source file was:
-#include <pthread.h>
-
-void* test_func(void* data)
-{
-  return data;
-}
-
-int main(void)
-{
-  pthread_t thread;
-  pthread_create(&thread, NULL, test_func, NULL);
-  pthread_detach(thread);
-  pthread_join(thread, NULL);
-  pthread_atfork(NULL, NULL, NULL);
-  pthread_exit(NULL);
-
-  return 0;
-}
-
-Determining if the pthread_create exist failed with the following output:
-Change Dir: /usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp
-
-Run Build Command:"/usr/bin/make" "cmTC_c7cd6/fast"
-/usr/bin/make -f CMakeFiles/cmTC_c7cd6.dir/build.make CMakeFiles/cmTC_c7cd6.dir/build
-make[1]: Entering directory '/usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_c7cd6.dir/CheckSymbolExists.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_c7cd6.dir/CheckSymbolExists.c.o   -c /usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTC_c7cd6
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c7cd6.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_c7cd6.dir/CheckSymbolExists.c.o  -o cmTC_c7cd6 
-CMakeFiles/cmTC_c7cd6.dir/CheckSymbolExists.c.o: In function `main':
-CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
-collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_c7cd6.dir/build.make:97: recipe for target 'cmTC_c7cd6' failed
-make[1]: *** [cmTC_c7cd6] Error 1
-make[1]: Leaving directory '/usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_c7cd6/fast' failed
-make: *** [cmTC_c7cd6/fast] Error 2
-
-File /usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
-/* */
-#include <pthread.h>
-
-int main(int argc, char** argv)
-{
-  (void)argv;
-#ifndef pthread_create
-  return ((int*)(&pthread_create))[argc];
-#else
-  (void)argc;
-  return 0;
-#endif
-}
-
-Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
-Change Dir: /home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make cmTC_95ed5/fast && /usr/bin/make -f CMakeFiles/cmTC_95ed5.dir/build.make CMakeFiles/cmTC_95ed5.dir/build
-make[1]: Entering directory '/home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_95ed5.dir/src.c.o
-/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_95ed5.dir/src.c.o   -c /home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_95ed5
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_95ed5.dir/link.txt --verbose=1
-/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    CMakeFiles/cmTC_95ed5.dir/src.c.o  -o cmTC_95ed5 
-/usr/bin/ld: CMakeFiles/cmTC_95ed5.dir/src.c.o: in function `main':
-src.c:(.text+0x46): undefined reference to `pthread_create'
-/usr/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
-/usr/bin/ld: src.c:(.text+0x63): undefined reference to `pthread_join'
-collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_95ed5.dir/build.make:87: cmTC_95ed5] Error 1
-make[1]: Leaving directory '/home/jcastro/Desktop/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_95ed5/fast] Error 2
-
-
-Source file was:
-#include <pthread.h>
-
-void* test_func(void* data)
-{
-  return data;
-}
-
-int main(void)
-{
-  pthread_t thread;
-  pthread_create(&thread, NULL, test_func, NULL);
-  pthread_detach(thread);
-  pthread_join(thread, NULL);
-  pthread_atfork(NULL, NULL, NULL);
-  pthread_exit(NULL);
-
-  return 0;
-}
-
-Determining if the pthread_create exist failed with the following output:
-Change Dir: /usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp
-
-Run Build Command:"/usr/bin/make" "cmTC_44ae8/fast"
-/usr/bin/make -f CMakeFiles/cmTC_44ae8.dir/build.make CMakeFiles/cmTC_44ae8.dir/build
-make[1]: Entering directory '/usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_44ae8.dir/CheckSymbolExists.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_44ae8.dir/CheckSymbolExists.c.o   -c /usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTC_44ae8
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_44ae8.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_44ae8.dir/CheckSymbolExists.c.o  -o cmTC_44ae8 
-CMakeFiles/cmTC_44ae8.dir/CheckSymbolExists.c.o: In function `main':
-CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
-collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_44ae8.dir/build.make:97: recipe for target 'cmTC_44ae8' failed
-make[1]: *** [cmTC_44ae8] Error 1
-make[1]: Leaving directory '/usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_44ae8/fast' failed
-make: *** [cmTC_44ae8/fast] Error 2
-
-File /usr/src/cppweb/hello_crow/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
-/* */
-#include <pthread.h>
-
-int main(int argc, char** argv)
-{
-  (void)argv;
-#ifndef pthread_create
-  return ((int*)(&pthread_create))[argc];
-#else
-  (void)argc;
-  return 0;
-#endif
 }
 

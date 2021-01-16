@@ -1,1 +1,1 @@
-/usr/local/bin/c++      CMakeFiles/hello_crow.dir/main.cpp.o  -o hello_crow /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so -pthread 
+/usr/bin/c++     CMakeFiles/hello_crow.dir/main.cpp.o  -o hello_crow  /usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.71.0 -pthread 

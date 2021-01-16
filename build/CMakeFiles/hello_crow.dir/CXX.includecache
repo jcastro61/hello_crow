@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/usr/src/cppweb/hello_crow/crow_all.h
+/home/jcastro/Desktop/github-lib/hello_crow/crow_all.h
 stdio.h
 -
 string.h
@@ -214,9 +214,9 @@ type_traits
 thread
 -
 
-/usr/src/cppweb/hello_crow/main.cpp
+/home/jcastro/Desktop/github-lib/hello_crow/main.cpp
 crow_all.h
-/usr/src/cppweb/hello_crow/crow_all.h
+/home/jcastro/Desktop/github-lib/hello_crow/crow_all.h
 iostream
 -
 fstream

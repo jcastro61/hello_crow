@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
       });
 
     char * port = getenv("PORT");
-    uint16_t iport = static_cast<uint16_t>(port != NULL? stoi(port) : 18080);
+    uint16_t iport = static_cast<uint16_t>(port != NULL? stoi(port) : 8080);
     cout << "PORT=" << iport << endl;
 
     app.port(iport).multithreaded().run();
