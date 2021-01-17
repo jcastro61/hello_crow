@@ -113,11 +113,6 @@ int main(int argc, char* argv[])
         sendStyle(res, filename);
       });
 
-    //CROW_ROUTE(app, "/scripts/<string>")
-    //  ([](const request &req, response &res, string filename){
-    //    sendScript(res, filename);
-    //  });
-
     CROW_ROUTE(app, "/images/<string>")
       ([](const request &req, response &res, string filename){
         sendImage(res, filename);
@@ -143,6 +138,15 @@ int main(int argc, char* argv[])
         //return crow::response(bsoncxx::to_json(doc.value().view()));
         getView(res, "contact", dto);
       });
+
+    CROW_ROUTE(app, "/api/contact/<string>")
+      ([&collection](string email){
+        auto doc = collection.find_one(make_document(kvp("email", email)));
+
+        crow::json::wvalue dto;
+        dto["contact"] = json::load(bsoncxx::to_json(doc.value().view()));
+        return crow::response{dto};
+        });
 
     CROW_ROUTE(app, "/contact/<string>/<string>")
       ([&collection](const request & req, response & res, string firstname, string lastname){
@@ -172,10 +176,90 @@ int main(int argc, char* argv[])
         }
         dto["contacts"] = contacts;
         getView(res, "contacts", dto);
-
       });
 
-    CROW_ROUTE(app, "/mongo")
+    CROW_ROUTE(app, "/api/contacts")
+      ([&collection](const request & req){
+        auto skipVal = req.url_params.get("skip");
+        auto limitVal = req.url_params.get("limit");
+        int skip = 0;
+        int limit = 10;
+
+        // catch invalid data exceptions and keep our server running
+        if (skipVal) {
+          try {
+            skip = stoi(skipVal);
+          } catch (const std::exception& e) {
+            std::cout << "Data exception occurred in - " << e.what() << std::endl;
+          }
+        }
+
+        if (limitVal) {
+          try {
+            limit = stoi(limitVal);
+          } catch (const std::exception& e) {
+            std::cout << "Data exception occurred in - " << e.what() << std::endl;
+          }
+        }
+
+        mongocxx::options::find opts;
+        opts.skip(skip);
+        opts.limit(limit);
+
+        auto docs = collection.find({}, opts);
+        std::vector<crow::json::rvalue> contacts;
+        contacts.reserve(10);
+
+        for (auto doc : docs) {
+          contacts.push_back(json::load(bsoncxx::to_json(doc)));
+          //std::cout << bsoncxx::to_json(doc) << std::endl;
+        }
+
+        crow::json::wvalue dto;
+        dto["contacts"] = contacts;
+        return crow::response{dto};
+      });
+
+    CROW_ROUTE(app, "/add/<int>/<int>")
+     ([](const request &req, response &res, int a, int b){
+         res.set_header("Content-Type","text/plain");
+         ostringstream os;
+         os << "Integer: " << a << " + " << b << " = " << a + b << "\n";
+         res.write(os.str());
+         res.end();
+     });
+
+   CROW_ROUTE(app, "/add/<double>/<double>")
+     ([](const request &req, response &res, double a, double b){
+         res.set_header("Content-Type","text/plain");
+         ostringstream os;
+         os << "Double: " << a << " + " << b << " = " << a + b << "\n";
+         res.write(os.str());
+         res.end();
+     });
+
+   CROW_ROUTE(app, "/add/<string>/<string>")
+     ([](const request &req, response &res, string a, string b){
+         res.set_header("Content-Type","text/plain");
+         ostringstream os;
+         os << "String: " << a << " + " << b << " = " << a + b << "\n";
+         res.write(os.str());
+         res.end();
+     });
+
+     CROW_ROUTE(app, "/query")
+      ([](const request & req, response & res ){
+        auto firstname = req.url_params.get("firstname");
+        auto lastname = req.url_params.get("lastname");
+        ostringstream os;
+        os << "Hello " << (firstname ? firstname : "")  <<
+              " " << (lastname ? lastname : "");
+        res.set_header("Content-Type","text/plain");
+        res.write(os.str());
+        res.end();
+      });
+
+     CROW_ROUTE(app, "/mongo")
       ([](){
         return "mongodb://localhost:37017/contact";
       });
