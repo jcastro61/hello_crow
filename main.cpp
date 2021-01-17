@@ -31,6 +31,11 @@ using namespace std;
 using namespace crow;
 using namespace crow::mustache;
 
+string getView(const string & filename, context & x)
+{
+  return load("../public" + filename + ".html").render(x);
+}
+
 void sendFile(response & res, string filename, string contentType)
 {
   ifstream in("../public/" + filename, ifstream::in);
@@ -69,12 +74,14 @@ void sendImage(response & res, string filename)
 
 void sendStyle(response & res, string filename)
 {
-  sendFile(res, "/styles/" + filename + ".css", "text/css");
+  sendFile(res, "styles/" + filename + ".css", "text/css");
 }
 
 int main(int argc, char* argv[])
 {
     crow::SimpleApp app;
+    set_base(".");
+
     mongocxx::instance inst {};
     // Use for Heroku, not local db
     // string mongoConnect = std::string(getenv("MONGO_URI"))
@@ -87,11 +94,16 @@ int main(int argc, char* argv[])
         mongocxx::options::find opts;
         opts.limit(10);
         auto docs = collection.find({}, opts);
-        std::ostringstream os;
-        for (auto &&doc : docs) {
-          os << bsoncxx::to_json(doc) << "\n";
+        crow::json::wvalue dto;
+        std::vector<crow::json::rvalue> contacts;
+        contacts.reserve(10);
+
+        for (auto doc : docs) {
+          contacts.push_back(json::load(bsoncxx::to_json(doc)));
         }
-        return crow::response(os.str());
+        dto["contacts"] = contacts;
+        return getView("contacts", dto);
+
       });
 
     CROW_ROUTE(app, "/mongo")
@@ -104,9 +116,14 @@ int main(int argc, char* argv[])
         sendHtml(res, "about");
       });
 
+    CROW_ROUTE(app, "/image/<string>")
+      ([](const request & req, response & res, string filename){
+        sendImage(res, filename);
+      });
+
     CROW_ROUTE(app, "/styles/<string>")
       ([](const request & req, response & res, string filename){
-        sendStyle(res, "styles");
+        sendStyle(res, filename);
       });
 
     CROW_ROUTE(app, "/")
