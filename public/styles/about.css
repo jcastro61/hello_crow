@@ -1,4 +1,4 @@
 body {
-  background-color: "green";
-  background-image: image("images/test.jpg");
+  background-color: "blue";
+  background-image: image("/image/test.jpg");
 }

@@ -24,7 +24,9 @@ using bsoncxx::builder::stream::document;
 using bsoncxx::builder::stream::finalize;
 using bsoncxx::builder::stream::open_array;
 using bsoncxx::builder::stream::open_document;
+using bsoncxx::builder::basic::make_document;
 using bsoncxx::builder::basic::kvp;
+
 using mongocxx::cursor;
 
 using namespace std;
@@ -33,7 +35,7 @@ using namespace crow::mustache;
 
 string getView(const string & filename, context & x)
 {
-  return load("../public" + filename + ".html").render(x);
+  return load("../public/" + filename + ".html").render(x);
 }
 
 void sendFile(response & res, string filename, string contentType)
@@ -89,6 +91,15 @@ int main(int argc, char* argv[])
     mongocxx::client conn {mongocxx::uri(mongoConnect)};
     auto collection = conn["CRM"]["contacts"];
 
+    CROW_ROUTE(app, "/contact/<string>")
+      ([&collection](string email){
+        auto doc = collection.find_one(make_document(kvp("email", email)));
+        crow::json::wvalue dto;
+        dto["contact"] = json::load(bsoncxx::to_json(doc.value().view()));
+        //return crow::response(bsoncxx::to_json(doc.value().view()));
+        return getView("contact", dto);
+      });
+
     CROW_ROUTE(app, "/contacts")
       ([&collection](){
         mongocxx::options::find opts;
@@ -100,6 +111,7 @@ int main(int argc, char* argv[])
 
         for (auto doc : docs) {
           contacts.push_back(json::load(bsoncxx::to_json(doc)));
+          //std::cout << bsoncxx::to_json(doc) << std::endl;
         }
         dto["contacts"] = contacts;
         return getView("contacts", dto);
