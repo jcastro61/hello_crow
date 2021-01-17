@@ -58,25 +58,24 @@ void sendHtml(response & res, string filename)
 {
   sendFile(res, filename + ".html", "text/html");
 }
-
 void sendText(response & res, string filename)
 {
   sendFile(res, filename + ".txt", "text/text");
 }
-
 void sendJson(response & res, string filename)
 {
   sendFile(res, filename + ".json", "text/json");
 }
-
 void sendImage(response & res, string filename)
 {
   sendFile(res, "/images/" + filename, "image/jpeg");
 }
-
 void sendStyle(response & res, string filename)
 {
   sendFile(res, "styles/" + filename + ".css", "text/css");
+}
+void sendScript(response &res, string filename){
+  sendFile(res, "scripts/" + filename, "text/javascript");
 }
 
 int main(int argc, char* argv[])
@@ -87,9 +86,28 @@ int main(int argc, char* argv[])
     mongocxx::instance inst {};
     // Use for Heroku, not local db
     // string mongoConnect = std::string(getenv("MONGO_URI"))
+
+    // Use for local mongodb running in Docker container
     string mongoConnect = std::string("mongodb://localhost:37017/contact");
+
     mongocxx::client conn {mongocxx::uri(mongoConnect)};
     auto collection = conn["CRM"]["contacts"];
+
+    CROW_ROUTE(app, "/styles/<string>")
+      ([](const request &req, response &res, string filename){
+        res.add_header("Content-Type", "text/css");
+        sendStyle(res, filename);
+      });
+
+    //CROW_ROUTE(app, "/scripts/<string>")
+    //  ([](const request &req, response &res, string filename){
+    //    sendScript(res, filename);
+    //  });
+
+    CROW_ROUTE(app, "/images/<string>")
+      ([](const request &req, response &res, string filename){
+        sendImage(res, filename);
+      });
 
     CROW_ROUTE(app, "/contact/<string>")
       ([&collection](string email){
@@ -128,14 +146,9 @@ int main(int argc, char* argv[])
         sendHtml(res, "about");
       });
 
-    CROW_ROUTE(app, "/image/<string>")
-      ([](const request & req, response & res, string filename){
-        sendImage(res, filename);
-      });
-
-    CROW_ROUTE(app, "/styles/<string>")
-      ([](const request & req, response & res, string filename){
-        sendStyle(res, filename);
+    CROW_ROUTE(app, "/hello")
+      ([](const request & req, response & res){
+        sendHtml(res, "hello");
       });
 
     CROW_ROUTE(app, "/")
