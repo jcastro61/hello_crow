@@ -5,6 +5,9 @@
 #include <sstream>
 #include <vector>
 #include <cstdlib>
+#include <unordered_set>
+#include <mutex>
+
 #include <boost/filesystem.hpp>
 #include <bsoncxx/builder/stream/document.hpp>
 #include <bsoncxx/json.hpp>
@@ -94,9 +97,13 @@ void notFound(response & res, const string & message)
 
 int main(int argc, char* argv[])
 {
+    std::mutex mtx;
+    std::unordered_set<crow::websocket::connection *> users;
+
     crow::SimpleApp app;
     set_base(".");
 
+    // set up our connection to MongoDB
     mongocxx::instance inst {};
     // Use for Heroku, not local db
     // string mongoConnect = std::string(getenv("MONGO_URI"))
@@ -106,6 +113,37 @@ int main(int argc, char* argv[])
 
     mongocxx::client conn {mongocxx::uri(mongoConnect)};
     auto collection = conn["CRM"]["contacts"];
+
+    CROW_ROUTE(app, "/ws")
+      .websocket()
+        .onopen([&](crow::websocket::connection & conn) {
+          std::lock_guard<std::mutex>_(mtx);
+          users.insert(&conn);
+        })
+        .onclose([&](crow::websocket::connection & conn, const string & reason) {
+            std::lock_guard<std::mutex>_(mtx);
+            users.erase(&conn);
+        })
+        .onmessage([&](crow::websocket::connection & /*conn*/, const string & data, bool is_binary) {
+          std::lock_guard<std::mutex>_(mtx);
+          for ( auto user: users) {
+            if (is_binary) {
+              user->send_binary(data);
+            } else {
+              user->send_text(data);
+            }
+          }
+        });
+
+    CROW_ROUTE(app, "/chat")
+      ([](const request & req, response & res) {
+        sendHtml(res, "chat");
+      });
+
+    CROW_ROUTE(app, "/scripts/<string>")
+      ([](const request &req, response &res, string filename){
+        sendScript(res, filename);
+      });
 
     CROW_ROUTE(app, "/styles/<string>")
       ([](const request &req, response &res, string filename){

@@ -225,6 +225,10 @@ vector
 -
 cstdlib
 -
+unordered_set
+-
+mutex
+-
 boost/filesystem.hpp
 -
 bsoncxx/builder/stream/document.hpp
